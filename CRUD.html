@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    tr{
+      text-align: center;
+    }
+    input {
+      width: 400px;
+    }
+  </style>
+</head>
+<body>
+<h1> -----------------student name -------------------</h1>
+<input id="newStudent" type="text" placeholder="please full in the form to create student !!!">
+<label  id="validate"></label>
+<button onclick="createStudent()">create student</button>
+<input type="text" id="seach" > <button onclick="actionSeach()"> seach</button>
+<table border="1" style="width: 100%">
+    <tr>
+      <th>STT</th>
+      <th>name</th>
+      <th>edit</th>
+        <th>delete</th>
+
+    </tr>
+  <tbody id="drawTable">
+
+  </tbody>
+
+<!--  <tr>-->
+<!--    <td>1</td>-->
+<!--    <td>Mai gau</td>-->
+
+<!--  </tr>-->
+<!--  <tr>-->
+<!--    <td>2</td>-->
+<!--    <td>hai</td>-->
+<!--  </tr>-->
+</table>
+<script>
+  let studentsList = ["mai gau", "hai"];
+  function showListStudent () {
+    let drawTable = ''
+    for (let i = 0; i<studentsList.length; i++){
+//cach 1: qua ++
+      // drawTable += '<tr>' + '<td>'+i+'</td>' +
+      //        ' <td>'+ studentsList[i] + '</td>'+
+      //         '</tr>';
+//cach 2: qua ${}
+      drawTable+= `<tr>
+<td>${i+1}</td>
+<td>${studentsList[i]}</td>
+<td><button onclick="updateStudent(${i})">edit</button></td>
+<th><button onclick="deleteStudent(${i})">delete</button></th>
+      </tr>`
+    }
+    document.getElementById('drawTable').innerHTML=drawTable;
+  }
+  showListStudent();
+  //xay dung ham create
+  function createStudent(){
+    let newStudent = document.getElementById('newStudent').value;
+    if (newStudent.trim()===''){
+      document.getElementById('validate').innerHTML  = '<label style="color: red" id="validate">please try again</label>'
+    }else {
+      studentsList.push(newStudent);
+      document.getElementById('validate').innerHTML  = '<label style="color: blue" id="validate">success</label>'
+      showListStudent()
+    }
+  }
+  //xay dung ham sua
+
+  function updateStudent (id){
+    console.log(id)
+    let updateStudent = prompt('enter the new Student', 'old name: ' + studentsList[id])
+    if (updateStudent.trim()===''){
+      document.getElementById('validate').innerHTML  = '<label style="color: red" id="validate">please try again</label>'
+    }else {
+      if (updateStudent===studentsList[id]){
+        document.getElementById('validate').innerHTML  = '<label style="color: red" id="validate">please try again</label>'
+      }else {
+        studentsList[id] = updateStudent;
+        document.getElementById('validate').innerHTML  = '<label style="color: blue" id="validate">success</label>'
+        showListStudent()
+      }
+    }
+  }
+
+
+  //4 Xây dựng hàm Delete student
+function deleteStudent (id){
+      if (confirm('are you sure delete?')){
+          studentsList.splice(id,1)
+          document.getElementById('validate').innerHTML  = '<label style="color: blue" id="validate">success</label>'
+          showListStudent()
+      } else {
+          document.getElementById('validate').innerHTML  = '<label style="color: red" id="validate">please try again</label>'
+      }
+
+}
+
+let listStudentSeach = [];
+  function actionSeach() {
+      listStudentSeach = [];
+      let seach = document.getElementById('seach').value;
+
+      // timf kiem tuyet doi
+
+      if (seach.trim()=== ' '){
+          showListStudent()
+          return;
+      }else {
+          //     for (let i=0;i<studentsList.length;i++){
+          //         if (seach===studentsList[i].toLowerCase()){
+          //             listStudentSeach.push(studentsList[i])
+          //         }
+          //     }
+          // }
+
+          // tim kiem tuowng doi
+          for (let i = 0; i < studentsList.length; i++) {
+              if (studentsList[i].search(seach) != -1) {
+                  listStudentSeach.push(studentsList[i])
+              }
+
+              showListseach()
+          }
+      }
+
+      function showListseach() {
+          let drawTable = ''
+          for (let i = 0; i < listStudentSeach.length; i++) {
+//cach 1: qua ++
+              drawTable += '<tr>' + '<td>' + i + '</td>' +
+                  ' <td>' + studentsList[i] + '</td>' +
+                  '</tr>';
+//cach 2: qua ${}
+//         drawTable += `<tr>
+// <td>${i + 1}</td>
+// <td>${listStudentSeach[i]}</td>
+// <td><button onclick="updateStudent(${i})">edit</button></td>
+// <th><button onclick="deleteStudent(${i})">delete</button></th>
+//       </tr>`
+          }
+          document.getElementById('drawTable').innerHTML = drawTable;
+      }
+  }
+</script>
+
+</body>
+</html>

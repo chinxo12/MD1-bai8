@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>tieng anh</h3>;
+<input type="text" id="anh">
+<h3>tieng viet</h3>
+<input type="text" id="viet">
+<button onclick="dich()" >dich</button>
+<script>
+
+    function dich () {
+        var color = ["white", "red", "blu", "orange"];
+        var mauSac = ["trang", "do", "xanh da troi", "cam"];
+        let eng = document.getElementById('anh').value;
+        console.log(eng)
+        for (let i=0 ; i<color.length;i++){
+            if (eng===color[i]){
+               document.getElementById('viet').value=mauSac[i];
+               break;
+            }
+            if (eng !== color[i])  {
+                alert('.....');
+
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
